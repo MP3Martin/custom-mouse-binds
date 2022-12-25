@@ -102,6 +102,7 @@ function parseBindKeyMouse (object) {
     const value = object[key];
     const badNames = value[1];
     const binds = value[2];
+    const keypressDelay = value[3];
 
     // create names
     const names = value[0];
@@ -125,7 +126,7 @@ function parseBindKeyMouse (object) {
           }
           setTimeout(() => {
             typeKey(bindValue);
-          }, 140);
+          }, keypressDelay);
         }
       }, null, null, fKey);
     }
@@ -146,7 +147,8 @@ const bindKeyMouse = {
     {
       5: 'e',                            // pressing [CTRL + ALT + NUMPAD 5] presses key [E]
       7: 'x'                             // use your mouse macro editor to create the [CTRL + ALT + NUMPAD 7] key combination
-    }
+    },
+    0                                    // keypress delay
   ]
 };
 /* eslint-enable */
