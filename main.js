@@ -1,6 +1,6 @@
 // This file listens for custom key combinations and does some stuff after.
 // If you are not MP3Martin, you can use this as an example for something or modify it for yourself.
-// Saddly only tested on windows.
+// Saddly only tested on Windows 10.
 const GlobalKeyboardListener = require('node-global-key-listener');
 const robot = require('kbm-robot');
 const activeWindow = require('active-win');
@@ -65,7 +65,7 @@ function listenKeys (key, funct, ignoreShift = true, singleKey = true, matchDown
 }
 
 // eslint-disable-next-line
-function typeKeys (keys) {
+function typeKeys(keys) {
   robot.typeString(keys).go();
 }
 
@@ -100,7 +100,8 @@ function parseBindKeyMouse (object) {
   for (const key in object) {
     // setup consts
     const value = object[key];
-    const binds = value[1];
+    const badNames = value[1];
+    const binds = value[2];
 
     // create names
     const names = value[0];
@@ -117,6 +118,11 @@ function parseBindKeyMouse (object) {
 
         // if the title contains all the names
         if (names.every(item => winName().includes(item))) {
+          for (const badName of badNames) {
+            if (winName().includes(badName) && !names.includes(badName)) {
+              return;
+            }
+          }
           setTimeout(() => {
             typeKey(bindValue);
           }, 140);
@@ -132,16 +138,14 @@ console.log('Running');
 
 //   ---------------  ↓ MODIFY FROM HERE ↓  ---------------
 
-// FORMAT:
-// Name: [[otherStringRequiredInName], {1:stringOrFunction, 2:stringOrFunction}]
-
 /* eslint-disable */
 const bindKeyMouse = {
-  Minecraft: [ // window name
-    ['-'],     // required string(s) in window's name
+  Minecraft: [                           // window name
+    ['-'],                               // required string(s) in window's name
+    ['Mozilla', 'Chrome', 'Google'],     // strings that can not be in window name
     {
-      5: 'e', // pressing [CTRL + ALT + NUMPAD 5] presses key [E]
-      7: 'x'  // use your mouse macro editor to create the [CTRL + ALT + NUMPAD 7] key combination
+      5: 'e',                            // pressing [CTRL + ALT + NUMPAD 5] presses key [E]
+      7: 'x'                             // use your mouse macro editor to create the [CTRL + ALT + NUMPAD 7] key combination
     }
   ]
 };
