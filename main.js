@@ -64,6 +64,7 @@ function listenKeys (key, funct, ignoreShift = true, singleKey = true, matchDown
   });
 }
 
+// eslint-disable-next-line
 function typeKeys (keys) {
   robot.typeString(keys).go();
 }
@@ -134,6 +135,7 @@ console.log('Running');
 // FORMAT:
 // Name: [[otherStringRequiredInName], {1:stringOrFunction, 2:stringOrFunction}]
 
+/* eslint-disable */
 const bindKeyMouse = {
   Minecraft: [ // window name
     ['-'],     // required string(s) in window's name
@@ -143,5 +145,6 @@ const bindKeyMouse = {
     }
   ]
 };
+/* eslint-enable */
 
 parseBindKeyMouse(bindKeyMouse);
