@@ -135,11 +135,11 @@ console.log('Running');
 // Name: [[otherStringRequiredInName], {1:stringOrFunction, 2:stringOrFunction}]
 
 const bindKeyMouse = {
-  Minecraft: [
-    ['-'],
+  Minecraft: [ // window name
+    ['-'],     // required string(s) in window's name
     {
-      5: 'e',
-      7: 'x'
+      5: 'e', // pressing [CTRL + ALT + NUMPAD 5] presses key [E]
+      7: 'x'  // use your mouse macro editor to create the [CTRL + ALT + NUMPAD 7] key combination
     }
   ]
 };
