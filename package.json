@@ -21,6 +21,7 @@
     "active-win": "^8.0.2",
     "kbm-robot": "^0.0.4",
     "node-global-key-listener": "^0.1.1",
+    "node-hid": "^2.1.2",
     "stack-trace": "^1.0.0-pre1"
   }
 }
