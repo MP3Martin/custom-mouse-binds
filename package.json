@@ -2,6 +2,7 @@
   "name": "custom-mouse-binds",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +20,7 @@
   "dependencies": {
     "active-win": "^8.0.2",
     "kbm-robot": "^0.0.4",
-    "node-global-key-listener": "^0.1.1"
+    "node-global-key-listener": "^0.1.1",
+    "stack-trace": "^1.0.0-pre1"
   }
 }

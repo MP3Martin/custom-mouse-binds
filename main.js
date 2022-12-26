@@ -1,14 +1,18 @@
 // This file listens for custom key combinations and does some stuff after.
 // If you are not MP3Martin, you can use this as an example for something or modify it for yourself.
 // Saddly only tested on Windows 10.
-const GlobalKeyboardListener = require('node-global-key-listener');
-const robot = require('kbm-robot');
-const activeWindow = require('active-win');
+import { parse } from 'stack-trace';
+import GlobalKeyboardListener from 'node-global-key-listener';
+import robot from 'kbm-robot';
+import activeWindow from 'active-win';
+import bindKeyMouse from './bindKeyMouse.js';
 
 // - SETUP -
 const v = new GlobalKeyboardListener.GlobalKeyboardListener();
 
-robot.startJar();
+customTry(() => {
+  robot.startJar();
+}, 'starting robot server');
 
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'uncaughtException', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, cleanup);
@@ -28,11 +32,19 @@ function filterObject (object, cond) {
   return out;
 }
 
+function customTry (fun, msg) {
+  try {
+    fun();
+  } catch (e) {
+    console.error(`Failed ${msg} (on line ${parse(e)[0].lineNumber})`);
+    process.exit(1);
+  }
+}
+
 function listenKeys (key, funct, ignoreShift = true, singleKey = true, matchDown = false) {
   v.addListener(function (e, down) {
     const filteredDown = {};
     filteredDown.value = filterObject(down, (key, value) => { return value === true; });
-    // console.log(filteredDown);
 
     if (matchDown !== false) {
       if (filteredDown.value[matchDown] === true && filteredDown.value['LEFT CTRL'] === true && filteredDown.value['LEFT ALT'] === true) {
@@ -137,20 +149,6 @@ function parseBindKeyMouse (object) {
 
 console.log('Running');
 
-//   ---------------  ↓ MODIFY FROM HERE ↓  ---------------
-
-/* eslint-disable */
-const bindKeyMouse = {
-  Minecraft: [                           // window name
-    ['-'],                               // required string(s) in window's name
-    ['Mozilla', 'Chrome', 'Google'],     // strings that can not be in window name
-    {
-      5: 'e',                            // pressing [CTRL + ALT + NUMPAD 5] presses key [E]
-      7: 'x'                             // use your mouse macro editor to create the [CTRL + ALT + NUMPAD 7] key combination
-    },
-    0                                    // keypress delay
-  ]
-};
-/* eslint-enable */
-
-parseBindKeyMouse(bindKeyMouse);
+customTry(() => {
+  parseBindKeyMouse(bindKeyMouse);
+}, 'parsing bindKeyMouse');
